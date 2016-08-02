@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.yesworkflow.service.graph.model.Graph;
 import org.yesworkflow.service.graph.model.Script;
 
 @RestController
@@ -18,10 +19,10 @@ import org.yesworkflow.service.graph.model.Script;
 @CrossOrigin
 public class GraphServiceController {
 
-	@RequestMapping(value="graph/", method=RequestMethod.POST)
+	@RequestMapping(value="graph", method=RequestMethod.POST)
     @ResponseBody
-	public String getCachedGraph(@RequestBody Script script) {
-		return "{ \"language\": \"" + script.getLanguage() + "\"}";
+	public Graph getGraph(@RequestBody Script script) {
+		return new Graph(script.getLanguage());
 	}
 
 	@RequestMapping(value="graph/cache/{id}", method=RequestMethod.GET)
