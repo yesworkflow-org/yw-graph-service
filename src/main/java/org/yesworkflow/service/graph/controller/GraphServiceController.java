@@ -1,11 +1,11 @@
 package org.yesworkflow.service.graph.controller;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
-import java.util.List;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,11 +21,9 @@ import org.yesworkflow.db.YesWorkflowDB;
 import org.yesworkflow.extract.Extractor;
 import org.yesworkflow.extract.DefaultExtractor;
 
-import org.yesworkflow.annotations.Annotation;
 import org.yesworkflow.model.DefaultModeler;
 import org.yesworkflow.model.Modeler;
 import org.yesworkflow.model.Program;
-import org.yesworkflow.model.Workflow;
 
 import org.yesworkflow.graph.Grapher;
 import org.yesworkflow.graph.CommentVisibility;
@@ -37,6 +35,8 @@ import org.yesworkflow.graph.TitlePosition;
 
 import org.yesworkflow.service.graph.model.Graph;
 import org.yesworkflow.service.graph.model.Script;
+import org.yesworkflow.util.ProcessRunner;
+import org.yesworkflow.util.StreamSink;
 
 
 @RestController
@@ -56,6 +56,7 @@ public class GraphServiceController {
 
 		String skeleton = null;
 		String dot = null;
+		String svg = null;
 		String error = null;
 		String code = script.getCode();
 
@@ -87,16 +88,29 @@ public class GraphServiceController {
 
 			grapher.graph();
 			dot = grapher.toString();
+			
+			StreamSink streams[] = runGraphviz(dot);
+			svg = streams[0].toString();
+			
+			
 
 		} catch(Exception e) {
 			error = e.getMessage();
 		}
 
-		return new Graph(nextGraphId++, skeleton, dot, error);
+		return new Graph(nextGraphId++, skeleton, dot, svg, error);
 	}
 
 	@RequestMapping(value="graph/cache/{id}", method=RequestMethod.GET)
 	public String getCachedGraph(@PathVariable Long id) {
 		return "{ \"cached_graphviz_file\": " + id + "}";
+	}
+	
+	
+	private StreamSink[] runGraphviz(String dotSource) throws Exception {
+		
+		 StreamSink[] streams = ProcessRunner.run("C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe -Tsvg", dotSource, new String[0], null);
+		
+		return streams;
 	}
 }
