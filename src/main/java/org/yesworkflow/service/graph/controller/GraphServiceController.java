@@ -55,7 +55,7 @@ public class GraphServiceController {
 	public Graph getGraph(@RequestBody Script script) throws Exception {
 
 		String skeleton = null;
-		String graph = null;
+		String dot = null;
 		String error = null;
 		String code = script.getCode();
 
@@ -86,15 +86,13 @@ public class GraphServiceController {
 				.workflow(program);
 
 			grapher.graph();
-			graph = grapher.toString();
+			dot = grapher.toString();
 
 		} catch(Exception e) {
 			error = e.getMessage();
 		}
 
-		System.out.println(graph);
-
-		return new Graph(nextGraphId++, skeleton, graph);
+		return new Graph(nextGraphId++, skeleton, dot, error);
 	}
 
 	@RequestMapping(value="graph/cache/{id}", method=RequestMethod.GET)

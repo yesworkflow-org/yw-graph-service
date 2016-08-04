@@ -4,15 +4,17 @@ public class Graph {
     
     private Long id;
     private String skeleton;
-    private String dotSource;
+    private String dot;
+    private String error;
 
 	public Graph() {}
 
-    public Graph(Long id, String skeleton, String dotSource) {
+    public Graph(Long id, String skeleton, String dot, String error) {
         this();
         this.id = id;
         this.skeleton = skeleton;
-        this.dotSource = dotSource;
+        this.dot = dot;
+        this.error = error;
     }
 
     public void setId(Long id) {
@@ -31,11 +33,19 @@ public class Graph {
         return this.skeleton;
     }
 
-    public void setDotSource(String dotSource) {
-        this.dotSource = dotSource;
+    public void setDot(String dot) {
+        this.dot = dot;
     }
 
-    public String getDotSource() {
-        return dotSource;
+    public String getDot() {
+        return this.dot;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public String getError() {
+        return this.error;
     }
 }
