@@ -2,20 +2,40 @@ package org.yesworkflow.service.graph.model;
 
 public class Graph {
     
-    private String dot;
+    private Long id;
+    private String skeleton;
+    private String dotSource;
 
 	public Graph() {}
 
-    public Graph(String dot) {
+    public Graph(Long id, String skeleton, String dotSource) {
         this();
-        this.dot = dot;
+        this.id = id;
+        this.skeleton = skeleton;
+        this.dotSource = dotSource;
     }
 
-    public void setDot(String dot) {
-        this.dot = dot;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getDot() {
-        return dot;
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setSkeleton(String skeleton) {
+        this.skeleton = skeleton;
+    }
+
+    public String getSkeleton() {
+        return this.skeleton;
+    }
+
+    public void setDotSource(String dotSource) {
+        this.dotSource = dotSource;
+    }
+
+    public String getDotSource() {
+        return dotSource;
     }
 }

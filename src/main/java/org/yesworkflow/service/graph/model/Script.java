@@ -1,7 +1,7 @@
 package org.yesworkflow.service.graph.model;
 
 public class Script {
-    
+
     private String language;
     private String code;
 
