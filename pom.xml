@@ -27,11 +27,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         
-      	<!--<dependency>
+      	<dependency>
             <groupId>org.yesworkflow</groupId>
             <artifactId>yesworkflow</artifactId>
     		<version>0.2.1-SNAPSHOT</version>
-        </dependency>-->
+        </dependency>
 
     </dependencies>
 
