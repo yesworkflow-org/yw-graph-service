@@ -90,13 +90,8 @@ public class GraphServiceController {
 			dot = grapher.toString();
 			
 			StreamSink streams[] = runGraphviz(dot);
-			String svgDocument = streams[0].toString();
+			svg = streams[0].toString();
 
-			int svgElementStart = svgDocument.indexOf("<svg");
-			svg = svgDocument.substring(svgElementStart);
-
-			
-			
 
 		} catch(Exception e) {
 			error = e.getMessage();
