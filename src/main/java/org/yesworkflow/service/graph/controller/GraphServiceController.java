@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+
+
+import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +42,6 @@ import org.yesworkflow.service.graph.model.Script;
 import org.yesworkflow.util.ProcessRunner;
 import org.yesworkflow.util.StreamSink;
 
-
 @RestController
 @RequestMapping("/api/v1/")
 @EnableAutoConfiguration
@@ -46,6 +49,9 @@ import org.yesworkflow.util.StreamSink;
 public class GraphServiceController {
 
 	private Long nextGraphId = 1L;
+
+	@Value("${dot_executable}")
+	public String dotExecutable;
 
 	public GraphServiceController() {
 	}
@@ -92,6 +98,7 @@ public class GraphServiceController {
 			StreamSink streams[] = runGraphviz(dot);
 			svg = streams[0].toString();
 
+			System.out.println(svg);
 
 		} catch(Exception e) {
 			error = e.getMessage();
@@ -107,9 +114,6 @@ public class GraphServiceController {
 	
 	
 	private StreamSink[] runGraphviz(String dotSource) throws Exception {
-		
-		 StreamSink[] streams = ProcessRunner.run("C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe -Tsvg", dotSource, new String[0], null);
-		
-		return streams;
+		return ProcessRunner.run(dotExecutable + " -Tsvg", dotSource, new String[0], null);
 	}
 }
