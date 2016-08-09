@@ -46,15 +46,12 @@ import org.yesworkflow.util.StreamSink;
 @RequestMapping("/api/v1/")
 @EnableAutoConfiguration
 @CrossOrigin
-public class GraphServiceController {
+public class YWGraphServiceController {
 
 	private Long nextGraphId = 1L;
 
 	@Value("${dot_executable}")
 	public String dotExecutable;
-
-	public GraphServiceController() {
-	}
     
 	@RequestMapping(value="graph", method=RequestMethod.POST)
     @ResponseBody
