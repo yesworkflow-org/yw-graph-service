@@ -32,6 +32,7 @@ import org.yesworkflow.model.Program;
 import org.yesworkflow.graph.Grapher;
 import org.yesworkflow.graph.CommentVisibility;
 import org.yesworkflow.graph.DotGrapher;
+import org.yesworkflow.graph.LayoutDirection;
 import org.yesworkflow.graph.GraphView;
 import org.yesworkflow.graph.ParamVisibility;
 import org.yesworkflow.graph.PortLayout;
@@ -83,9 +84,9 @@ public class YWGraphServiceController {
 
 			Grapher grapher = new DotGrapher(System.out, System.err)
 			  	.configure("view", GraphView.COMBINED_VIEW)
+			  	.configure("layout", LayoutDirection.TB)
                	.configure("dotcomments", CommentVisibility.ON)
                	.configure("params", ParamVisibility.SHOW)
-               	.configure("titleposition", TitlePosition.HIDE)
                	.configure("portlayout", PortLayout.RELAX)
 				.workflow(program);
 
