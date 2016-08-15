@@ -63,14 +63,17 @@ public class YWGraphServiceController {
 		String svg = null;
 		String error = null;
 		String code = request.getCode();
+		String requestLanguage = request.getLanguage();
 
 		BufferedReader reader = new BufferedReader(new StringReader(code));
 		YesWorkflowDB ywdb = YesWorkflowDB.createInstance();
 
 		try {
 
+			Language ywLanguage = Language.toLanguage(requestLanguage);
+
 			Extractor extractor = new DefaultExtractor(ywdb)
-				.configure("language", Language.PYTHON)
+				.configure("language", ywLanguage)
 				.reader(reader)
 				.extract();
 
