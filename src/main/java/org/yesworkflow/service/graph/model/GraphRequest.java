@@ -1,13 +1,13 @@
 package org.yesworkflow.service.graph.model;
 
-public class Script {
+public class GraphRequest {
 
     private String language;
     private String code;
 
-    public Script() {}
+    public GraphRequest() {}
 
-    public Script(String language, String code) {
+    public GraphRequest(String language, String code) {
         this.language = language;
         this.code = code;
     }

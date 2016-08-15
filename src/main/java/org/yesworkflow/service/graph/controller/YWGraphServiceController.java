@@ -38,8 +38,8 @@ import org.yesworkflow.graph.ParamVisibility;
 import org.yesworkflow.graph.PortLayout;
 import org.yesworkflow.graph.TitlePosition;
 
-import org.yesworkflow.service.graph.model.Graph;
-import org.yesworkflow.service.graph.model.Script;
+import org.yesworkflow.service.graph.model.GraphRequest;
+import org.yesworkflow.service.graph.model.GraphResponse;
 import org.yesworkflow.util.ProcessRunner;
 import org.yesworkflow.util.StreamSink;
 
@@ -56,13 +56,13 @@ public class YWGraphServiceController {
     
 	@RequestMapping(value="graph", method=RequestMethod.POST)
     @ResponseBody
-	public Graph getGraph(@RequestBody Script script) throws Exception {
+	public GraphResponse getGraph(@RequestBody GraphRequest request) throws Exception {
 
 		String skeleton = null;
 		String dot = null;
 		String svg = null;
 		String error = null;
-		String code = script.getCode();
+		String code = request.getCode();
 
 		BufferedReader reader = new BufferedReader(new StringReader(code));
 		YesWorkflowDB ywdb = YesWorkflowDB.createInstance();
@@ -102,7 +102,7 @@ public class YWGraphServiceController {
 			error = e.getMessage();
 		}
 
-		return new Graph(nextGraphId++, skeleton, dot, svg, error);
+		return new GraphResponse(nextGraphId++, skeleton, dot, svg, error);
 	}
 
 	@RequestMapping(value="graph/cache/{id}", method=RequestMethod.GET)

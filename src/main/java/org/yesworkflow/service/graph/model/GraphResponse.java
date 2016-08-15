@@ -1,6 +1,6 @@
 package org.yesworkflow.service.graph.model;
 
-public class Graph {
+public class GraphResponse {
     
     private Long id;
     private String skeleton;
@@ -8,9 +8,9 @@ public class Graph {
     private String svg;
     private String error;
 
-	public Graph() {}
+	public GraphResponse() {}
 
-    public Graph(Long id, String skeleton, String dot, String svg, String error) {
+    public GraphResponse(Long id, String skeleton, String dot, String svg, String error) {
         this();
         this.id = id;
         this.skeleton = skeleton;
