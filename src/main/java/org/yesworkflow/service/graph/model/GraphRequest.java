@@ -4,12 +4,14 @@ public class GraphRequest {
 
     private String language;
     private String code;
+    private String properties;
 
     public GraphRequest() {}
 
-    public GraphRequest(String language, String code) {
+    public GraphRequest(String language, String code, String properties) {
         this.language = language;
         this.code = code;
+        this.properties = properties;
     }
 
     public void setLanguage(String language) {
@@ -26,5 +28,13 @@ public class GraphRequest {
 
     public String getCode() {
         return code;
+    }
+
+    public void setProperties(String properties) {
+        this.properties = properties;
+    }
+
+    public String getProperties() {
+        return properties;
     }
 }

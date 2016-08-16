@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.yesworkflow.Language;
 
+import org.yesworkflow.config.YWConfiguration;
+
 import org.yesworkflow.db.YesWorkflowDB;
 
 import org.yesworkflow.extract.Extractor;
@@ -63,16 +65,23 @@ public class YWGraphServiceController {
 		String svg = null;
 		String error = null;
 		String code = request.getCode();
-		String requestLanguage = request.getLanguage();
 
 		BufferedReader reader = new BufferedReader(new StringReader(code));
 		YesWorkflowDB ywdb = YesWorkflowDB.createInstance();
 
 		try {
 
+			YWConfiguration config = new YWConfiguration();
+			String properties = request.getProperties();
+			if (properties != null) {
+				config.applyProperties(new StringReader(properties));
+			}
+
+			String requestLanguage = request.getLanguage();
 			Language ywLanguage = Language.toLanguage(requestLanguage);
 
 			Extractor extractor = new DefaultExtractor(ywdb)
+				.configure(config.getSection("extract"))
 				.configure("language", ywLanguage)
 				.reader(reader)
 				.extract();
@@ -80,17 +89,14 @@ public class YWGraphServiceController {
 			skeleton = extractor.getSkeleton();
 
 			Modeler modeler = new DefaultModeler(ywdb)
+				.configure(config.getSection("model"))
 				.annotations(extractor.getAnnotations())
 				.model();
 
         	Program program = modeler.getModel().program;
 
 			Grapher grapher = new DotGrapher(System.out, System.err)
-			  	.configure("view", GraphView.COMBINED_VIEW)
-			  	.configure("layout", LayoutDirection.TB)
-               	.configure("dotcomments", CommentVisibility.ON)
-               	.configure("params", ParamVisibility.SHOW)
-               	.configure("portlayout", PortLayout.RELAX)
+				.configure(config.getSection("graph"))
 				.workflow(program);
 
 			grapher.graph();
