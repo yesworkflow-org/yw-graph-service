@@ -1,8 +1,6 @@
 package org.yesworkflow.service.graph.controller;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
 import java.io.StringReader;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -29,16 +27,9 @@ import org.yesworkflow.extract.DefaultExtractor;
 
 import org.yesworkflow.model.DefaultModeler;
 import org.yesworkflow.model.Modeler;
-import org.yesworkflow.model.Program;
-
+import org.yesworkflow.model.Workflow;
 import org.yesworkflow.graph.Grapher;
-import org.yesworkflow.graph.CommentVisibility;
 import org.yesworkflow.graph.DotGrapher;
-import org.yesworkflow.graph.LayoutDirection;
-import org.yesworkflow.graph.GraphView;
-import org.yesworkflow.graph.ParamVisibility;
-import org.yesworkflow.graph.PortLayout;
-import org.yesworkflow.graph.TitlePosition;
 
 import org.yesworkflow.service.graph.model.GraphRequest;
 import org.yesworkflow.service.graph.model.GraphResponse;
@@ -93,11 +84,11 @@ public class YWGraphServiceController {
 				.annotations(extractor.getAnnotations())
 				.model();
 
-        	Program program = modeler.getModel().program;
+        	Workflow workflow = modeler.getModel().workflow;
 
 			Grapher grapher = new DotGrapher(System.out, System.err)
 				.configure(config.getSection("graph"))
-				.workflow(program);
+				.workflow(workflow);
 
 			grapher.graph();
 			dot = grapher.toString();
