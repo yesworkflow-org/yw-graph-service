@@ -44,8 +44,8 @@ public class YWGraphServiceController {
 
 	private Long nextGraphId = 1L;
 
-	@Value("${dot-executable}")
-	public String dotExecutable;
+	@Value("${graph-service.dot-command}")
+	public String dotCommand;
     
 	@RequestMapping(value="graph", method=RequestMethod.POST)
     @ResponseBody
@@ -112,6 +112,6 @@ public class YWGraphServiceController {
 	
 	
 	private StreamSink[] runGraphviz(String dotSource) throws Exception {
-		return ProcessRunner.run(dotExecutable + " -Tsvg", dotSource, new String[0], null);
+		return ProcessRunner.run(dotCommand + " -Tsvg", dotSource, new String[0], null);
 	}
 }
