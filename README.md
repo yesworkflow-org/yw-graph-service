@@ -1,9 +1,9 @@
 YesWorkflow Graph Service
 =========================
 
-This repository contains the source code for a microservice currently under development for producing [YesWorkflow](https://github.com/yesworkflow-org/yw-prototypes/blob/master/README.md) (YW) visualizations of scripts.  When provided with the text of a script containing YW markup, the service will return an [SVG](https://www.w3.org/Graphics/SVG/) representation of the YW visualization of the script.  The [GraphViz](http://graphviz.org/) [dot-language](http://graphviz.org/content/dot-language) source the YesWorkflow uses to produce the SVG is included in the response. Visualization properties sent as part of the request allow customization of the visualization.
+This repository contains the source code for a microservice currently under development for producing [YesWorkflow](https://github.com/yesworkflow-org/yw-prototypes/blob/master/README.md) (YW) visualizations of scripts.  When provided with the text of a script containing YW markup, the service will return an [SVG](https://www.w3.org/Graphics/SVG/) representation of the YW graph of the script.  The [GraphViz](http://graphviz.org/) [dot-language](http://graphviz.org/content/dot-language) source that YesWorkflow uses to produce the SVG is included in the response. Graph properties sent as part of the request allow customization of the visualization.
 
-The graph service is used by the web-based [YesWorkflow Editor](https://github.com/yesworkflow-org/yw-editor-webapp) application. A demonstration of the editor, graph service, and YesWorkflow can be found at [try.yesworkflow.org](http://try.yesworkflow.org).
+The graph service is used by the [YesWorkflow Editor](https://github.com/yesworkflow-org/yw-editor-webapp) web application. A demonstration of the editor, graph service, and YesWorkflow can be found at [try.yesworkflow.org](http://try.yesworkflow.org).
 
 Running the YW Graph Service
 ----------------------------
@@ -11,7 +11,7 @@ The microservice is implemented using [Spring Boot](http://projects.spring.io/sp
 
 ### Install a Java Runtime Environment (JRE)
 
-YesWorkflow Graph Service requires Java version 1.8 or higher. To determine the version of java installed on your computer use the -version option to the java command. For example,
+The YesWorkflow Graph Service requires Java version 1.8 or higher. To determine the version of java installed on your computer use the -version option to the java command. For example,
 
 
     $ java -version
@@ -36,7 +36,7 @@ The microservice now can be run using the `java -jar` command. For example:
 
     $ java -jar yw-graph-service-0.2.1.1.jar 
 
-This will start the service running on the default port of 8000. To run the service on a different port specify using the `server-port` option.  For example:
+This will start the service running on the default port of 8000. To run the service on a different port specify it using the `server-port` option.  For example:
 
     $ java -jar yw-graph-service-0.2.1.1.jar --server.port=8001
 
@@ -66,7 +66,7 @@ JDK 8 and Maven 3 downloads and detailed installation instructions can be found 
 
 #### Building and running with Maven
 
-The YW Graph Service can be built and tested from the command line using the following commands:
+The YW Graph Service can be built and run from the command line using the following Maven commands:
 
 Command       | Description
 --------------|------------
@@ -78,9 +78,9 @@ mvn spring-boot:run | Run the Graph Service without packaging it as a jar.  Comp
 Using the Graph Service
 -----------------------
 
-The YW Graph Service itself provides no user interface.  Instead, it implements a REST-style web service which can be called from or embedded in other applications. Requests are sent to the service as an HTTP POST with a body containing a JSON object with three fields (providing the script containing YW annotations, the name of the language the script is written in, and the set of desired properties of the requested graph).
+The YW Graph Service itself provides no user interface.  Instead, it implements a REST-style web service which can be called from or embedded in other applications. Requests are sent to the service as an HTTP POST with a body containing a JSON object with three fields that provide the script containing YW annotations, the name of the language the script is written in, and the set of desired properties of the requested graph.
 
-The single REST endpoint currently implemted by the service is:
+The single REST endpoint currently implemented by the service is:
 
     /yw-graph-service/api/v1/graph
 
@@ -94,7 +94,7 @@ An example of the information contained in a valid (API v1) request is:
         properties: 'graph.view = combined'
     }
 
-The (API v1) response from the Graph Service for this request (with the `dot` and `svg` values truncated) wound contain:
+The (API v1) response from the Graph Service for this request (with the `dot` and `svg` values truncated) would contain:
 
     {
         id:         1, 
@@ -133,4 +133,4 @@ The YW Graph Service may be packaged and run in the same JVM with other Spring B
         }
     }
 
-As shown above, the YW Editor application bundles the Graph Service in this way. This allows the Graph Service to be run either as part of the YW Editor application (in the same server process, using the same host name and port number as the editor services), or completely independently (on a different port or another host entirely) depending on configuration.
+As shown above, the YW Editor application bundles the Graph Service in this way. This allows the Graph Service to be run either as part of the YW Editor application (in the same server process, using the same host name and port number as the editor services), or independently (on a different port or another host entirely) depending on configuration.
