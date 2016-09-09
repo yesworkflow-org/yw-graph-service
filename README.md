@@ -78,9 +78,13 @@ mvn spring-boot:run | Run the Graph Service without packaging it as a jar.  Comp
 Using the Graph Service
 -----------------------
 
-The YW Graph Service itself provides no user interface.  Instead, it implements a REST-style web service which can be called from or embedded in other applications. Requests are sent to the service as an HTTP POST with a body containing a JSON object with three fields (providing the script containing YW annotations, the name of the language the script is written in, and the set of desired properties of the requested graph).  
+The YW Graph Service itself provides no user interface.  Instead, it implements a REST-style web service which can be called from or embedded in other applications. Requests are sent to the service as an HTTP POST with a body containing a JSON object with three fields (providing the script containing YW annotations, the name of the language the script is written in, and the set of desired properties of the requested graph).
 
-An example of a valid request body is:
+The single REST endpoint currently implemted by the service is:
+
+    /yw-graph-service/api/v1/graph
+
+An example of the information contained in a valid (API v1) request is:
 
     {
         code:       '# @begin script
@@ -90,7 +94,7 @@ An example of a valid request body is:
         properties: 'graph.view = combined'
     }
 
-The response from the Graph Service for this request (with the dot and svg fields truncated) is:
+The (API v1) response from the Graph Service for this request (with the `dot` and `svg` values truncated) wound contain:
 
     {
         id:         1, 
@@ -114,3 +118,4 @@ The response from the Graph Service for this request (with the dot and svg field
         error:      ''
     }
 
+Additional optional request fields may be added to v1 of the API, additional fields may be added to API v1 response.  New endpoints also may be added.  However, breaking changes will not be made to API without incrementing the API version number.
