@@ -1,7 +1,7 @@
 YesWorkflow Graph Service
 =========================
 
-This repository contains the source code for a microservice that produces [YesWorkflow](https://github.com/yesworkflow-org/yw-prototypes) (YW) visualizations of scripts.  When provided with the text of a script containing YW markup, the service will return an [SVG](https://www.w3.org/Graphics/SVG/) representation of the YW visualization of the script.  The [GraphViz](http://graphviz.org/) [dot language](http://graphviz.org/content/dot-language) source the YesWorkflow uses to produce the SVG is included in the response. Visualization properties sent as part of the request allow customization of the visualization.
+This repository contains the source code for a microservice currently under development for producing [YesWorkflow](https://github.com/yesworkflow-org/yw-prototypes/blob/master/README.md) (YW) visualizations of scripts.  When provided with the text of a script containing YW markup, the service will return an [SVG](https://www.w3.org/Graphics/SVG/) representation of the YW visualization of the script.  The [GraphViz](http://graphviz.org/) [dot language](http://graphviz.org/content/dot-language) source the YesWorkflow uses to produce the SVG is included in the response. Visualization properties sent as part of the request allow customization of the visualization.
 
 Running the YW Graph Service
 ----------------------------
@@ -24,6 +24,19 @@ YesWorkflow Graph Service requires Java version 1.8 or higher. To determine the 
 
 Graphviz may be obtained from  [http://graphviz.org/Download.php](http://graphviz.org/Download.php) or installed via a package manager. Make sure that the `dot` command is on the PATH following installation.
 
+### Download the Jar file for the latest release
+
+A pre-built jar file is included in each [release](https://github.com/yesworkflow-org/yw-graph-service/releases) of the YW Graph Service package.  Download the jar file to your system.  It will be named something like `yw-graph-service-0.2.1.1.jar`.
+
+### Run the jar file
+
+The microservice now can be run using the `java -jar` command. For example:
+
+    $ java -jar yw-graph-service-0.2.1.1.jar 
+
+This will start the service running on the default port of 8000. To run the service on a different port specify using the --server-port option.  For example:
+
+    $ java -jar yw-graph-service-0.2.1.1.jar --server.port=8001
 
 
 
