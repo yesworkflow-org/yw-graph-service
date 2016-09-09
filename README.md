@@ -118,4 +118,19 @@ The (API v1) response from the Graph Service for this request (with the `dot` an
         error:      ''
     }
 
-Additional optional request fields may be added to v1 of the API, additional fields may be added to API v1 response.  New endpoints also may be added.  However, breaking changes will not be made to API without incrementing the API version number.
+Additional optional request fields may be added to v1 of the API, and additional fields may be added to API v1 response. New endpoints also may be added to the service. Breaking changes will not be made to API without incrementing the API version number.
+
+Bundling the YW Graph Service with other services
+-------------------------------------------------
+The YW Graph Service may be packaged and run in the same JVM with other Spring Boot REST services.  Simply (1) make the yw-graph-service Maven project a dependency of the Maven project representing the bundle of services; and (2) declare to Spring Boot that the `org.yesworkflow.service.graph` package should be scanned for Spring Boot Controllers.  For example:
+
+    @SpringBootApplication
+    @ComponentScan(basePackages="org.yesworkflow.webapp.editor,     
+                                 org.yesworkflow.service.graph")
+    public class YWEditorApp {
+        public static void main(String[] args) {
+          SpringApplication.run(YWEditorApp.class, args);
+        }
+    }
+
+As shown above, the YW Editor application bundles the Graph Service in this way. This allows the Graph Service to be run either as part of the YW Editor application (in the same server process, using the same host name and port number as the editor services), or completely independently (on a different port or another host entirely) depending on configuration.
