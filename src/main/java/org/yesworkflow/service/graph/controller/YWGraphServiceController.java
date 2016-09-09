@@ -105,10 +105,10 @@ public class YWGraphServiceController {
 		return new GraphResponse(nextGraphId++, skeleton, dot, svg, error);
 	}
 
-	@RequestMapping(value="graph/cache/{id}", method=RequestMethod.GET)
-	public String getCachedGraph(@PathVariable Long id) {
-		return "{ \"cached_graphviz_file\": " + id + "}";
-	}
+	// @RequestMapping(value="graph/cache/{id}", method=RequestMethod.GET)
+	// public String getCachedGraph(@PathVariable Long id) {
+	// 	return "{ \"cached_graphviz_file\": " + id + "}";
+	// }
 	
 	
 	private StreamSink[] runGraphviz(String dotSource) throws Exception {
