@@ -89,7 +89,7 @@ An example of the information contained in a valid (API v1) request (pretty-prin
     {
         code:       # @begin script
                     print("Hello World")
-                    @end script,
+                    # @end script,
         language:   python,
         properties: graph.view = combined
     }
