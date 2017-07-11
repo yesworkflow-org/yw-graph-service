@@ -2,14 +2,13 @@ package org.yesworkflow.service.graph.controller;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
+import java.util.Map;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-
 
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ import org.yesworkflow.db.YesWorkflowDB;
 
 import org.yesworkflow.extract.Extractor;
 import org.yesworkflow.extract.DefaultExtractor;
-
 import org.yesworkflow.model.DefaultModeler;
 import org.yesworkflow.model.Modeler;
 import org.yesworkflow.model.Workflow;
@@ -47,6 +45,8 @@ public class YWGraphServiceController {
 	@Value("${graph-service.dot-command}")
 	public String dotCommand;
     
+    private String facts;         
+
 	@RequestMapping(value="graph", method=RequestMethod.POST)
     @ResponseBody
 	public GraphResponse getGraph(@RequestBody GraphRequest request) throws Exception {
@@ -83,8 +83,13 @@ public class YWGraphServiceController {
 				.configure(config.getSection("model"))
 				.annotations(extractor.getAnnotations())
 				.model();
-
+			
         	Workflow workflow = modeler.getModel().workflow;
+        	
+        	StringBuffer factsBuffer = new StringBuffer();
+            addFactsToBuffer(factsBuffer, modeler.getFacts());
+            addFactsToBuffer(factsBuffer, extractor.getFacts());
+            facts = factsBuffer.toString();
 
 			Grapher grapher = new DotGrapher(System.out, System.err)
 				.configure(config.getSection("graph"))
@@ -96,13 +101,11 @@ public class YWGraphServiceController {
 			StreamSink streams[] = runGraphviz(dot);
 			svg = streams[0].toString();
 
-			System.out.println(svg);
-
 		} catch(Exception e) {
 			error = e.getMessage();
 		}
-
-		return new GraphResponse(nextGraphId++, skeleton, dot, svg, error);
+		
+		return new GraphResponse(nextGraphId++, skeleton, dot, svg, facts, error);
 	}
 
 	// @RequestMapping(value="graph/cache/{id}", method=RequestMethod.GET)
@@ -114,4 +117,10 @@ public class YWGraphServiceController {
 	private StreamSink[] runGraphviz(String dotSource) throws Exception {
 		return ProcessRunner.run(dotCommand + " -Tsvg", dotSource, new String[0], null);
 	}
+	
+    private void addFactsToBuffer(StringBuffer buffer, Map<String,String> facts) {
+        for (Map.Entry<String, String> entry : facts.entrySet()) {
+            buffer.append(entry.getValue());            
+        }
+    }
 }

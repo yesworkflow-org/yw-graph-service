@@ -6,16 +6,18 @@ public class GraphResponse {
     private String skeleton;
     private String dot;
     private String svg;
+    private String facts;
     private String error;
 
 	public GraphResponse() {}
 
-    public GraphResponse(Long id, String skeleton, String dot, String svg, String error) {
+    public GraphResponse(Long id, String skeleton, String dot, String svg, String facts, String error) {
         this();
         this.id = id;
         this.skeleton = skeleton;
         this.dot = dot;
         this.svg = svg;
+        this.facts = facts;
         this.error = error;
     }
 
@@ -33,6 +35,14 @@ public class GraphResponse {
 
     public String getSkeleton() {
         return this.skeleton;
+    }
+
+    public void setFacts(String facts) {
+        this.facts = facts;
+    }
+
+    public String getFacts() {
+        return this.facts;
     }
 
     public void setDot(String dot) {
