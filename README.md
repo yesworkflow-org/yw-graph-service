@@ -3,7 +3,7 @@ YesWorkflow Graph Service
 
 This repository contains the source code for a microservice currently under development for producing [YesWorkflow](https://github.com/yesworkflow-org/yw-prototypes/blob/master/README.md) (YW) visualizations of scripts.  When provided with the text of a script containing YW markup, the service will return an [SVG](https://www.w3.org/Graphics/SVG/) representation of the YW graph of the script.  The [GraphViz](http://graphviz.org/) [dot-language](http://graphviz.org/content/dot-language) source that YesWorkflow uses to produce the SVG is included in the response. Graph properties sent as part of the request allow customization of the visualization.
 
-The graph service is used by the [YesWorkflow Editor](https://github.com/yesworkflow-org/yw-editor-webapp) web application. A demonstration of the editor, graph service, and YesWorkflow can be found at [try.yesworkflow.org](http://try.yesworkflow.org).
+The graph service is used by the [YesWorkflow Editor](https://github.com/yesworkflow-org/yw-editor-webapp) web application.
 
 Running the YW Graph Service
 ----------------------------
